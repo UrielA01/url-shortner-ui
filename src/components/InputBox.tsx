@@ -4,7 +4,8 @@ import { postURL } from '../services/api';
 function InputBox() {
   const [URL, setURL] = useState(String);
 
-  const [message, setMessage] = useState("");
+  const [link, setLink] = useState("");
+  const [error, serError] = useState("");
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
@@ -16,11 +17,13 @@ function InputBox() {
     postURL(URL)
       .then(response => {
         console.log('Success:', response);
-        setMessage(response.shortURL)
+        setLink(response.shortURL)
+        serError("")
       })
       .catch(error => {
         console.error('Error:', error);
-        setMessage(error.response.data.error.msg)
+        serError(error.response.data.error.msg)
+        setLink("")
       });
   };
 
@@ -38,7 +41,8 @@ function InputBox() {
         </div>
         <button type="submit">Submit</button>
       </form>
-      {message}
+      <a href={link}>{link}</a>
+      <p color='red'>{error}</p>
     </div>
   );
 }
