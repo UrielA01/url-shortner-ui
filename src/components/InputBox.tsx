@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { postURL } from '../services/api';
 
 function InputBox() {
-  const [URL, setURL] = useState(String);
+  const [URL, setURL] = useState("");
 
   const [link, setLink] = useState("");
   const [error, serError] = useState("");
@@ -42,7 +42,7 @@ function InputBox() {
         <button type="submit">Submit</button>
       </form>
       <a href={link}>{link}</a>
-      <p color='red'>{error}</p>
+      <p style={{ color: 'red' }}>{error}</p>
     </div>
   );
 }
