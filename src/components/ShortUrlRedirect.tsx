@@ -1,20 +1,21 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import { fetchURL } from '../services/api';
 
 function ShortUrlRedirect() {
-    const { shortId } = useParams();
+    const { shortId } = useParams<{ shortId: string }>();
 
     useEffect(() => {
-        fetchURL(shortId)
-            .then(response => {
-                const longUrl = response.data.longUrl;
-                window.location.href = longUrl; 
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+        if (shortId) {
+            fetchURL(shortId)
+                .then(response => {
+                    const originalUrl: string = response;
+                    window.location.href = originalUrl;
+                })
+                .catch(error => {
+                    window.location.href = "/";
+                });
+        }
     }, [shortId]);
 
     return (
